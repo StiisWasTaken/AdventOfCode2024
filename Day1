@@ -24,6 +24,19 @@ vector<int> distance_between(vector <int> &VecA, vector <int> &VecB) {
     return distance;
 }
 
+vector<int> similar_between(vector<int> &VecA, vector <int> &VecB) {
+	vector <int> VecC = {};
+	for (int i = 0; i < VecA.size(); i++) {
+		VecC.push_back(0);
+		for (int j = 0; j < VecA.size(); j++)
+		{
+			if (VecA[i] == VecB[j]) {
+				VecC[i] += VecB[j];
+			}
+		}
+	}
+	return VecC;
+}
 void write_output(vector <int> &VecC) {
 	ofstream file("Output.txt");
 	int sum = {};
@@ -39,7 +52,9 @@ int main() {
 	read_input(VecA, VecB);
 	sort(VecA.begin(), VecA.end());
 	sort(VecB.begin(), VecB.end());
-	vector <int> distance = distance_between(VecA, VecB);
-  write_output(distance);
-  return 0;
+	vector <int> distance = distance_between(VecA, VecB);// Part 1
+	vector <int> similar = similar_between(VecA, VecB);// Part 2
+	//write_output(distance);
+	write_output(similar);
+    return 0;
 }
