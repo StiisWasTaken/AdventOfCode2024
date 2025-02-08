@@ -1,0 +1,60 @@
+#include <iostream>
+#include <vector>
+#include <fstream>
+#include <string>
+#include <algorithm>
+
+using namespace std;
+
+void read_input(vector <int> &VecA, vector <int> &VecB ) {
+    ifstream file("Input.txt");
+    string line;
+	for (int i = 0; getline(file, line); i++) {
+		int pos = line.find(" ");
+		VecA.push_back(stoi(line.substr(0, pos)));
+		VecB.push_back(stoi(line.substr(pos + 1)));
+	}
+} 
+
+vector<int> distance_between(vector <int> &VecA, vector <int> &VecB) {
+    vector<int> distance = {};
+	for (int i = 0; i < VecA.size(); i++) {
+		distance.push_back(abs(VecA[i] - VecB[i]));
+	}
+    return distance;
+}
+
+vector<int> similar_between(vector<int> &VecA, vector <int> &VecB) {
+	vector <int> VecC = {};
+	for (int i = 0; i < VecA.size(); i++) {
+		VecC.push_back(0);
+		for (int j = 0; j < VecA.size(); j++)
+		{
+			if (VecA[i] == VecB[j]) {
+				VecC[i] += VecB[j];
+			}
+		}
+	}
+	return VecC;
+}
+void write_output(vector <int> &VecC) {
+	ofstream file("Output.txt");
+	int sum = {};
+	for (int i = 0; i < VecC.size(); i++) {
+		sum += VecC[i];
+	}
+	file << sum;
+}
+
+int main() {
+	vector <int> VecA = {};
+	vector <int> VecB = {};
+	read_input(VecA, VecB);
+	sort(VecA.begin(), VecA.end());
+	sort(VecB.begin(), VecB.end());
+	vector <int> distance = distance_between(VecA, VecB);// Part 1
+	vector <int> similar = similar_between(VecA, VecB);// Part 2
+	//write_output(distance);
+	write_output(similar);
+    return 0;
+}
